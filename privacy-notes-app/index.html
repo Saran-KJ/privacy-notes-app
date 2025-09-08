@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureNotes - Privacy-Focused Notes App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Setup Screen -->
+        <div id="setup-screen" class="screen">
+            <div class="login-container">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <h1>SecureNotes</h1>
+                </div>
+                <p class="tagline">Create your secure, encrypted notes vault</p>
+                
+                <div class="auth-form">
+                    <h3>Create Your Master Passphrase</h3>
+                    <p class="setup-info">This passphrase will encrypt all your notes. Choose something strong and memorable.</p>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-key"></i>
+                        <input type="password" id="setup-passphrase" placeholder="Create a strong passphrase" autocomplete="off">
+                    </div>
+                    
+                    <div class="input-group">
+                        <i class="fas fa-check"></i>
+                        <input type="password" id="confirm-passphrase" placeholder="Confirm your passphrase" autocomplete="off">
+                    </div>
+                    
+                    <div id="passphrase-strength" class="passphrase-strength">
+                        <div class="strength-bar">
+                            <div class="strength-fill"></div>
+                        </div>
+                        <p class="strength-text">Enter a passphrase to see strength</p>
+                    </div>
+                    
+                    <button id="create-vault-btn" class="primary-btn" disabled>
+                        <i class="fas fa-shield-alt"></i>
+                        Create Secure Vault
+                    </button>
+                    
+                    <div class="security-tips">
+                        <h4>Security Tips:</h4>
+                        <ul>
+                            <li>Use at least 12 characters</li>
+                            <li>Mix uppercase, lowercase, numbers, and symbols</li>
+                            <li>Avoid common words or personal information</li>
+                            <li>Remember it well - there's no recovery option</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Screen -->
+        <div id="login-screen" class="screen active">
+            <div class="login-container">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <h1>SecureNotes</h1>
+                </div>
+                <p class="tagline">Your privacy-focused notes app with client-side encryption</p>
+                
+                <div class="auth-form">
+                    <div class="input-group">
+                        <i class="fas fa-key"></i>
+                        <input type="password" id="passphrase" placeholder="Enter your passphrase" autocomplete="off">
+                    </div>
+                    <button id="unlock-btn" class="primary-btn">
+                        <i class="fas fa-unlock"></i>
+                        Unlock Notes
+                    </button>
+                    <div class="setup-info">
+                        <h3>🔐 Create Your Secure Vault</h3>
+                        <p>Your passphrase encrypts all notes locally on your device. Choose something strong and memorable - you'll need it every time you access your notes.</p>
+                    </div>
+                    <p class="new-user-link">
+                        New user? <a href="#" id="show-setup">Create your vault</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main App Screen -->
+        <div id="main-screen" class="screen">
+            <header class="app-header">
+                <div class="header-left">
+                    <h2><i class="fas fa-shield-alt"></i> SecureNotes</h2>
+                </div>
+                <div class="header-center">
+                    <div class="search-container">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="Search notes...">
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button id="new-note-btn" class="icon-btn" title="New Note">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button id="lock-btn" class="icon-btn" title="Lock App">
+                        <i class="fas fa-lock"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="app-body">
+                <aside class="sidebar">
+                    <div class="sidebar-header">
+                        <h3>Notes</h3>
+                        <span id="notes-count" class="count">0</span>
+                    </div>
+                    
+                    <div class="filter-section">
+                        <div class="filter-tabs">
+                            <button class="filter-tab active" data-filter="all">All</button>
+                            <button class="filter-tab" data-filter="pinned">Pinned</button>
+                            <button class="filter-tab" data-filter="recent">Recent</button>
+                            <button class="filter-tab" data-filter="archived">Archived</button>
+                        </div>
+                    </div>
+
+                    <div class="tags-section">
+                        <h4>Tags</h4>
+                        <div id="tags-list" class="tags-list"></div>
+                    </div>
+
+                    <div class="utilities-section">
+                        <h4>Utilities</h4>
+                        <div class="utilities-actions">
+                            <button id="btn-export" class="secondary-btn"><i class="fas fa-file-export"></i> Export</button>
+                            <button id="btn-import" class="secondary-btn"><i class="fas fa-file-import"></i> Import</button>
+                            <button id="btn-clear" class="icon-btn danger" title="Clear All Data"><i class="fas fa-broom"></i></button>
+                            <input type="file" id="import-file" accept="application/json" style="display:none" />
+                        </div>
+                    </div>
+
+                    <div id="notes-list" class="notes-list">
+                        <!-- Notes will be dynamically populated -->
+                    </div>
+                </aside>
+
+                <main class="editor-area">
+                    <div id="welcome-screen" class="welcome-screen">
+                        <div class="welcome-content">
+                            <i class="fas fa-sticky-note"></i>
+                            <h3>Welcome to SecureNotes</h3>
+                            <p>Create your first encrypted note to get started</p>
+                            <button id="create-first-note" class="primary-btn">
+                                <i class="fas fa-plus"></i>
+                                Create Note
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="search-results" class="search-results hidden">
+                        <div class="search-results-header">
+                            <h3 id="search-results-title">Search Results</h3>
+                            <p id="search-results-count">0 notes found</p>
+                        </div>
+                        <div id="search-results-list" class="search-results-list">
+                            <!-- Search results will be populated here -->
+                        </div>
+                    </div>
+
+                    <div id="note-editor" class="note-editor hidden">
+                        <div class="editor-header">
+                            <input type="text" id="note-title" placeholder="Note title..." class="title-input">
+                            <div class="editor-actions">
+                                <button id="pin-note" class="icon-btn" title="Pin Note">
+                                    <i class="fas fa-thumbtack"></i>
+                                </button>
+                                <button id="archive-note" class="icon-btn" title="Archive Note">
+                                    <i class="fas fa-box-archive"></i>
+                                </button>
+                                <button id="delete-note" class="icon-btn danger" title="Delete Note">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <button id="save-note" class="primary-btn">
+                                    <i class="fas fa-save"></i>
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="editor-body">
+                            <textarea id="note-content" placeholder="Start writing your encrypted note..."></textarea>
+                        </div>
+                        
+                        <div class="editor-footer">
+                            <div class="tags-input-container">
+                                <input type="text" id="tags-input" placeholder="Add tags (comma-separated)">
+                            </div>
+                            <div class="note-meta">
+                                <span id="note-timestamp"></span>
+                                <span id="encryption-status">
+                                    <i class="fas fa-shield-alt"></i>
+                                    Encrypted
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p>Encrypting your notes...</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="crypto.js"></script>
+    <script src="storage.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
