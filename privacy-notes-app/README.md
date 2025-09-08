@@ -44,7 +44,7 @@ A modern, privacy-first notes application that uses client-side AES encryption t
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/secure-notes-app.git
+git clone https://github.com/Saran-KJ/privacy-notes-app.git
 
 # Navigate to the directory
 cd secure-notes-app

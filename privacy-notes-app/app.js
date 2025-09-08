@@ -147,7 +147,14 @@ class SecureNotesApp {
     async handleSetup() {
         const passphrase = document.getElementById('setup-passphrase').value;
         const confirmPassphrase = document.getElementById('confirm-passphrase').value;
-        
+
+        // Check if vault already exists for this user
+        const vaultKey = `user_vault_${this.currentUser}`;
+        if (localStorage.getItem(vaultKey)) {
+            this.showError('A vault already exists for this user. Please log in or use a different browser/profile.');
+            return;
+        }
+
         if (!passphrase.trim()) {
             this.showError('Please enter a passphrase');
             return;
@@ -168,18 +175,18 @@ class SecureNotesApp {
 
         try {
             const success = await this.crypto.createUserVault(passphrase, this.currentUser);
-            
+
             if (success) {
                 this.storage.setUserId(this.currentUser);
                 this.isAuthenticated = true;
                 await this.loadNotes();
                 this.showMainScreen();
                 this.hideLoading();
-                
+
                 // Clear form
                 document.getElementById('setup-passphrase').value = '';
                 document.getElementById('confirm-passphrase').value = '';
-                
+
                 this.showSuccess('Vault created successfully! Your notes are now encrypted.');
             } else {
                 this.hideLoading();

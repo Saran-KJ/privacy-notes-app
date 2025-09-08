@@ -62,14 +62,31 @@ class CryptoManager {
 
             // Convert salt back to Uint8Array
             const saltArray = new Uint8Array(salt.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
-            
+
             // Derive key from passphrase
             this.key = await this.deriveKey(passphrase, saltArray);
             this.userId = userId;
-            
-            // Test the key by trying to decrypt existing data (if any)
-            const testResult = await this.validateKey(userId);
-            return testResult;
+
+            // Always set the test value if missing, and validate
+            const testKey = `key_test_${userId}`;
+            let testData = localStorage.getItem(testKey);
+            const testMessage = 'key_validation_test';
+            if (!testData) {
+                // No test data exists, create one for new users
+                const encrypted = await this.encrypt(testMessage);
+                localStorage.setItem(testKey, encrypted);
+                testData = encrypted;
+                // For new vaults, always return true
+                return true;
+            }
+            // Try to decrypt existing test data
+            try {
+                const decrypted = await this.decrypt(testData);
+                return decrypted === testMessage;
+            } catch (decryptError) {
+                // Invalid passphrase for this user
+                return false;
+            }
         } catch (error) {
             console.error('Failed to initialize crypto:', error);
             return false;
@@ -84,20 +101,25 @@ class CryptoManager {
      */
     async createUserVault(passphrase, userId) {
         try {
-            // Generate new salt for this user
-            const saltArray = crypto.getRandomValues(new Uint8Array(16));
-            const salt = Array.from(saltArray).map(b => b.toString(16).padStart(2, '0')).join('');
-            localStorage.setItem(`app_salt_${userId}`, salt);
-            
+            // Only create new salt if vault does not exist
+            const vaultKey = `user_vault_${userId}`;
+            const saltKey = `app_salt_${userId}`;
+            let isNewVault = !localStorage.getItem(vaultKey);
+            if (isNewVault) {
+                const saltArray = crypto.getRandomValues(new Uint8Array(16));
+                const salt = Array.from(saltArray).map(b => b.toString(16).padStart(2, '0')).join('');
+                localStorage.setItem(saltKey, salt);
+            }
+
             // Initialize with new passphrase
             const success = await this.initialize(passphrase, userId);
-            
-            if (success) {
+
+            if (success && isNewVault) {
                 // Mark user as having a vault
-                localStorage.setItem(`user_vault_${userId}`, 'true');
+                localStorage.setItem(vaultKey, 'true');
                 localStorage.setItem('current_user', userId);
             }
-            
+
             return success;
         } catch (error) {
             console.error('Failed to create user vault:', error);
