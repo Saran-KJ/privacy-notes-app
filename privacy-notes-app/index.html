@@ -113,6 +113,10 @@
                     <button id="new-note-btn" class="icon-btn" title="New Note">
                         <i class="fas fa-plus"></i>
                     </button>
+                    <!-- Mobile: sidebar toggle -->
+                    <button id="sidebar-toggle" class="icon-btn mobile-only" title="Show sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
                     <button id="lock-btn" class="icon-btn" title="Lock App">
                         <i class="fas fa-lock"></i>
                     </button>
@@ -225,6 +229,9 @@
         <div class="spinner"></div>
         <p>Encrypting your notes...</p>
     </div>
+
+    <!-- Mobile sidebar overlay (hidden by default) -->
+    <div id="mobile-sidebar-overlay" class="mobile-sidebar-overlay hidden" aria-hidden="true"></div>
 
     <!-- Scripts -->
     <script src="crypto.js"></script>

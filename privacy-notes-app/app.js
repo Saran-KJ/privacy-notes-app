@@ -143,6 +143,28 @@ class SecureNotesApp {
         // Welcome screen
         document.getElementById('create-first-note').addEventListener('click', () => this.createNewNote());
 
+        // Mobile sidebar toggle
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const mobileOverlay = document.getElementById('mobile-sidebar-overlay');
+        if (sidebarToggle) {
+            sidebarToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.body.classList.add('sidebar-open');
+                if (mobileOverlay) {
+                    mobileOverlay.classList.remove('hidden');
+                    mobileOverlay.setAttribute('aria-hidden', 'false');
+                }
+            });
+        }
+
+        if (mobileOverlay) {
+            mobileOverlay.addEventListener('click', () => {
+                document.body.classList.remove('sidebar-open');
+                mobileOverlay.classList.add('hidden');
+                mobileOverlay.setAttribute('aria-hidden', 'true');
+            });
+        }
+
         // Note editor
         document.getElementById('save-note').addEventListener('click', () => this.saveCurrentNote());
         document.getElementById('delete-note').addEventListener('click', () => this.deleteCurrentNote());
