@@ -746,13 +746,16 @@ body {
     padding: 1rem 1.5rem;
     border-bottom: 1px solid var(--border-color);
     width: 100%;
+    /* Allow horizontal scrolling if space is constrained so tabs remain reachable */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .filter-tabs {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    /* Switch to a horizontal flex layout so tabs don't get clipped in narrow sidebars */
+    display: flex;
     gap: 1rem;
-    width: 100%;
+    align-items: center;
 }
 
 .filter-tab {
@@ -765,12 +768,14 @@ body {
     font-size: 0.95rem;
     font-weight: 600;
     transition: all 0.3s ease;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     text-align: center;
-    min-width: 0;
+    /* Prevent tabs from shrinking so they remain tappable/clickable */
+    flex: 0 0 auto;
+    min-width: 110px;
     white-space: nowrap;
 }
 
@@ -1366,15 +1371,15 @@ body {
     .filter-section {
         padding: 1rem 1.5rem;
     }
-    
     .filter-tabs {
+        /* On wider screens keep horizontal layout and show all tabs if space allows */
         display: flex;
         justify-content: flex-start;
         gap: 1rem;
     }
-    
+
     .filter-tab {
-        flex: 0 1 auto;
+        flex: 0 0 auto;
         min-width: 120px;
     }
 }
