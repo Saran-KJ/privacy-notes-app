@@ -1107,3 +1107,37 @@ class SecureNotesApp {
 document.addEventListener('DOMContentLoaded', () => {
     window.app = new SecureNotesApp();
 });
+
+// Mobile viewport fix: set --vh to 1% of the window innerHeight to work around mobile browser chrome resizing
+function setVhCssVariable() {
+    try {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    } catch (e) {
+        // ignore
+    }
+}
+
+setVhCssVariable();
+window.addEventListener('resize', () => setVhCssVariable());
+window.addEventListener('orientationchange', () => setVhCssVariable());
+
+// Ensure textarea scrolls into view when focused (helps on mobile when keyboard opens)
+function addEditorFocusScroll() {
+    const content = document.getElementById('note-content');
+    if (!content) return;
+
+    content.addEventListener('focus', () => {
+        // small timeout to allow keyboard to open
+        setTimeout(() => {
+            content.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+    });
+}
+
+// Try to add handler once DOM is ready
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    addEditorFocusScroll();
+} else {
+    document.addEventListener('DOMContentLoaded', addEditorFocusScroll);
+}
