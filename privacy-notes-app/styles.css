@@ -731,6 +731,10 @@ body {
 .filter-tabs {
     display: flex;
     gap: 0.5rem;
+    flex-wrap: nowrap;
+    width: 100%;
+    padding: 0.5rem;
+    overflow-x: visible;
 }
 
 .filter-tab {
@@ -747,6 +751,10 @@ body {
     align-items: center;
     gap: 0.5rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    flex: 1;
+    min-width: fit-content;
+    justify-content: center;
+    white-space: nowrap;
 }
 
 .filter-tab.active,
@@ -756,6 +764,12 @@ body {
     color: white;
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.filter-tab[data-filter="archived"] {
+    display: inline-flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .tags-section {
@@ -1328,6 +1342,23 @@ body {
 @media (max-width: 1024px) {
     .search-container input {
         width: 300px;
+    }
+}
+
+@media (min-width: 769px) {
+    .filter-section {
+        padding: 1rem 1.5rem;
+    }
+    
+    .filter-tabs {
+        display: flex;
+        justify-content: flex-start;
+        gap: 1rem;
+    }
+    
+    .filter-tab {
+        flex: 0 1 auto;
+        min-width: 120px;
     }
 }
 
