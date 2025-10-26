@@ -247,6 +247,31 @@ class SecureNotesApp {
         document.addEventListener('click', delegatedHandler);
         // Pointer events are more reliable for touch devices — handle pointerup as well
         document.addEventListener('pointerup', delegatedHandler);
+
+        // Add explicit pointer/touch handlers on critical buttons as a last-resort fallback
+        try {
+            const newBtn = document.getElementById('new-note-btn');
+            const createFirstBtn = document.getElementById('create-first-note');
+            const directCreateHandler = (e) => {
+                try {
+                    if (e && e.preventDefault) e.preventDefault();
+                } catch (err) {}
+                console.log('[direct handler] create note via', e.type || 'unknown');
+                try { this.createNewNote(); } catch (err) { console.error('Failed to create note from direct handler', err); }
+            };
+
+            if (newBtn) {
+                newBtn.addEventListener('pointerup', directCreateHandler);
+                newBtn.addEventListener('touchend', directCreateHandler);
+            }
+            if (createFirstBtn) {
+                createFirstBtn.addEventListener('pointerup', directCreateHandler);
+                createFirstBtn.addEventListener('touchend', directCreateHandler);
+            }
+        } catch (err) {
+            // ignore any errors attaching these fallbacks
+            console.error('Error attaching direct create handlers', err);
+        }
     }
 
     /**
@@ -405,6 +430,7 @@ class SecureNotesApp {
      * Create a new note
      */
     createNewNote() {
+        console.log('Action: createNewNote called');
         const newNote = {
             id: this.storage.generateId(),
             title: '',
