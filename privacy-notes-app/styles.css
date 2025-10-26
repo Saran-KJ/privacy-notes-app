@@ -1575,7 +1575,7 @@ body {
     /* Show sidebar when the toggle is used (overlay) */
     body.sidebar-open .sidebar { display: block !important; }
     /* Also show the sidebar inline on mobile when there are notes available */
-    body.has-notes .sidebar { display: block !important; position: static; max-height: 36vh; }
+    body.has-notes .sidebar { display: block !important; position:absolute; max-height: 36vh; }
 
      /* Keep header controls visible on mobile (search, new-note, lock). The hamburger (.mobile-only)
          remains mobile-only and will show the sidebar when needed. */
