@@ -89,6 +89,12 @@ body {
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 }
 
+/* Allow page scrolling on mobile devices to avoid getting stuck after closing overlays */
+@media (max-width: 768px) {
+    body { overflow: auto; }
+    .app-body { height: auto; }
+}
+
 /* Screen Management */
 .screen {
     display: none;

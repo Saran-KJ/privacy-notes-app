@@ -840,6 +840,19 @@ class SecureNotesApp {
         if (notesList) {
             notesList.innerHTML = '<div class="no-notes">No notes found</div>';
         }
+        // If mobile sidebar overlay was open, close it and allow page scrolling again
+        try {
+            document.body.classList.remove('sidebar-open');
+            const mobileOverlay = document.getElementById('mobile-sidebar-overlay');
+            if (mobileOverlay) {
+                mobileOverlay.classList.add('hidden');
+                mobileOverlay.setAttribute('aria-hidden', 'true');
+            }
+            // Ensure page is scrolled to top so welcome content is visible on small screens
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (e) {
+            // ignore
+        }
     }
 
     /**
