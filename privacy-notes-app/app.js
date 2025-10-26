@@ -265,11 +265,24 @@ class SecureNotesApp {
             if (success) {
                 this.isAuthenticated = true;
                 await this.loadNotes();
-                this.showMainScreen();
-                this.hideLoading();
                 
-                // Clear passphrase from input
+                // Clear passphrase from input and remove focus
                 document.getElementById('passphrase').value = '';
+                document.getElementById('passphrase').blur();
+                
+                // Reset scroll and viewport
+                window.scrollTo(0, 0);
+                document.body.style.overflow = 'hidden';
+                
+                // Ensure clean transition
+                document.getElementById('login-screen').style.display = 'none';
+                
+                // Show main screen with slight delay to ensure proper transition
+                setTimeout(() => {
+                    this.showMainScreen();
+                    this.hideLoading();
+                }, 100);
+                
             } else {
                 this.hideLoading();
                 this.showError('Invalid passphrase. Please try again.');

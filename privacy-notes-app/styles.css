@@ -97,14 +97,20 @@ body {
     position: fixed;
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 1;
     background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    overflow-x: hidden;
 }
 
 .screen.active {
     display: flex;
     flex-direction: column;
     z-index: 2;
+    opacity: 1;
 }
 
 /* Login Screen */
@@ -113,9 +119,17 @@ body {
     justify-content: center;
     background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
     color: white;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     overflow: hidden;
     animation: gradientShift 8s ease-in-out infinite;
+    z-index: 10;
+    -webkit-overflow-scrolling: touch;
+    height: 100%;
+    width: 100%;
 }
 
 @keyframes gradientShift {
@@ -580,6 +594,14 @@ body {
 /* Main App Layout */
 #main-screen {
     height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    background: #ffffff;
 }
 
 .app-header {
@@ -591,6 +613,8 @@ body {
     border-bottom: 1px solid #e2e8f0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 3;
 }
 
 .header-left h2 {
@@ -685,6 +709,9 @@ body {
 .app-body {
     display: flex;
     height: calc(100vh - 73px);
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
 }
 
 .sidebar {
