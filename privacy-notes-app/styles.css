@@ -1348,6 +1348,13 @@ body {
     display: none !important;
 }
 
+/* Ensure specific screens can be hidden even if other rules try to force them visible on small screens */
+#welcome-screen.hidden,
+#note-editor.hidden,
+#search-results.hidden {
+    display: none !important;
+}
+
 /* Enhanced glassmorphism effects */
 .login-container, .welcome-content {
     backdrop-filter: blur(25px);
@@ -1575,7 +1582,7 @@ body {
     #search-results { display: none !important; }
 
     /* Ensure welcome screen is visible and full width */
-    #welcome-screen { display: flex !important; }
+    #welcome-screen { display: flex; }
     .welcome-content { width: 100%; margin: 0.5rem; }
 }
 
