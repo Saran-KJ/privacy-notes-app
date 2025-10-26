@@ -99,18 +99,23 @@ class SecureNotesApp {
         // Password toggle buttons
         document.querySelectorAll('.password-toggle').forEach(button => {
             button.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent any default button behavior
                 const targetId = e.currentTarget.dataset.target;
                 const input = document.getElementById(targetId);
                 const icon = e.currentTarget.querySelector('i');
+                
+                if (!input) return; // Guard clause if input not found
                 
                 if (input.type === 'password') {
                     input.type = 'text';
                     icon.className = 'fas fa-eye-slash';
                     e.currentTarget.classList.add('showing');
+                    e.currentTarget.setAttribute('title', 'Hide password');
                 } else {
                     input.type = 'password';
                     icon.className = 'fas fa-eye';
                     e.currentTarget.classList.remove('showing');
+                    e.currentTarget.setAttribute('title', 'Show password');
                 }
             });
         });
