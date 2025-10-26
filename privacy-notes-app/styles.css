@@ -1374,15 +1374,22 @@ body {
         padding: 1rem 1.5rem;
     }
     .filter-tabs {
-        /* On wider screens keep horizontal layout and show all tabs if space allows */
+        /* On wider screens show filters as a vertical stack in the sidebar for visibility */
         display: flex;
-        justify-content: flex-start;
-        gap: 1rem;
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch;
     }
 
     .filter-tab {
+        /* Make each tab full width and larger on desktop for better visibility */
         flex: 0 0 auto;
-        min-width: 120px;
+        width: 100%;
+        min-width: 0;
+        padding: 0.9rem 1rem;
+        font-size: 1rem;
+        border-radius: 12px;
+        text-align: left;
     }
 }
 
