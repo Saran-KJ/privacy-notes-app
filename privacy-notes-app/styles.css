@@ -775,7 +775,8 @@ body {
     text-align: center;
     /* Prevent tabs from shrinking so they remain tappable/clickable */
     flex: 0 0 auto;
-    min-width: 110px;
+    /* Slightly smaller minimum so more tabs fit side-by-side on narrower sidebars */
+    min-width: 96px;
     white-space: nowrap;
 }
 
@@ -784,8 +785,9 @@ body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-color: #667eea;
     color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    /* reduce lift so active tab doesn't visually expand and overlap neighbors */
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.22);
 }
 
 .filter-tab[data-filter="archived"] {
