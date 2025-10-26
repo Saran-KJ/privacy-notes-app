@@ -170,6 +170,13 @@ class SecureNotesApp {
         document.getElementById('delete-note').addEventListener('click', () => this.deleteCurrentNote());
         document.getElementById('pin-note').addEventListener('click', () => this.togglePinNote());
         document.getElementById('archive-note').addEventListener('click', () => this.toggleArchiveNote());
+        const closeEditorBtn = document.getElementById('close-editor');
+        if (closeEditorBtn) {
+            closeEditorBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.showWelcomeScreen();
+            });
+        }
 
         // Auto-save on content change
         document.getElementById('note-title').addEventListener('input', () => this.scheduleAutoSave());
@@ -836,6 +843,13 @@ class SecureNotesApp {
     showNoteEditor() {
         document.getElementById('welcome-screen').classList.add('hidden');
         document.getElementById('note-editor').classList.remove('hidden');
+        // Focus the content textarea for immediate typing (small timeout to allow layout)
+        const content = document.getElementById('note-content');
+        if (content) {
+            setTimeout(() => {
+                try { content.focus(); } catch (e) {}
+            }, 150);
+        }
     }
 
     /**
