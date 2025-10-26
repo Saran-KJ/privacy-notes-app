@@ -210,19 +210,32 @@ class SecureNotesApp {
                 if (btn) {
                     // Debug log for tap events
                     console.log('[delegated event] button:', btn.id || btn.className, 'event:', e.type);
+
+                    // Add an explicit pre-call log and wrap calls to catch errors
                     if (btn.id === 'new-note-btn') {
-                        e.preventDefault();
-                        this.createNewNote();
+                        try {
+                            console.log('[delegated -> call] createNewNote about to be called (event:', e.type, ')');
+                            e.preventDefault && e.preventDefault();
+                            // Use setTimeout to avoid any re-entrancy issues with pointer events
+                            setTimeout(() => {
+                                try {
+                                    this.createNewNote();
+                                    console.log('[delegated -> called] createNewNote executed');
+                                } catch (errInner) {
+                                    console.error('[delegated -> error] createNewNote threw', errInner);
+                                }
+                            }, 0);
+                        } catch (err) {
+                            console.error('[delegated -> error preparing createNewNote call]', err);
+                        }
                         return;
                     }
                     if (btn.id === 'save-note') {
-                        e.preventDefault();
-                        this.saveCurrentNote();
+                        try { e.preventDefault && e.preventDefault(); this.saveCurrentNote(); } catch (err) { console.error('saveCurrentNote delegation error', err); }
                         return;
                     }
                     if (btn.id === 'close-editor') {
-                        e.preventDefault();
-                        this.showWelcomeScreen();
+                        try { e.preventDefault && e.preventDefault(); this.showWelcomeScreen(); } catch (err) { console.error('showWelcomeScreen delegation error', err); }
                         return;
                     }
                 }
