@@ -1571,7 +1571,8 @@ body {
          remains mobile-only and will show the sidebar when needed. */
 
     /* Hide other main screens so welcome create button is front-and-center */
-    #search-results, #note-editor { display: none !important; }
+    /* Note: do NOT forcibly hide #note-editor here — visibility is controlled by JS. */
+    #search-results { display: none !important; }
 
     /* Ensure welcome screen is visible and full width */
     #welcome-screen { display: flex !important; }
