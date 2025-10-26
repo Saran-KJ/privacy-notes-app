@@ -1477,6 +1477,45 @@ body {
         padding: 0.9rem 1rem;
     }
 
+    /* Editor: keep header/footer visible and make body scrollable on mobile */
+    .note-editor {
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 120px); /* leave space for app header and some padding */
+    }
+
+    .editor-header {
+        position: sticky;
+        top: 0;
+        z-index: 8;
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .editor-body {
+        flex: 1 1 auto;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 1rem;
+    }
+
+    .editor-footer {
+        position: sticky;
+        bottom: 0;
+        z-index: 9;
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        padding: 0.75rem 1rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    /* Keep header primary buttons compact so they don't overflow */
+    .editor-header .primary-btn {
+        width: auto;
+        min-height: 44px;
+        padding: 0.45rem 0.9rem;
+    }
+
     /* Slightly larger icon buttons for touch */
     .icon-btn {
         width: 3rem;
