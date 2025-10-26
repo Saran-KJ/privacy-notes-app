@@ -265,24 +265,11 @@ class SecureNotesApp {
             if (success) {
                 this.isAuthenticated = true;
                 await this.loadNotes();
+                this.showMainScreen();
+                this.hideLoading();
                 
-                // Clear passphrase from input and remove focus
+                // Clear passphrase from input
                 document.getElementById('passphrase').value = '';
-                document.getElementById('passphrase').blur();
-                
-                // Reset scroll and viewport
-                window.scrollTo(0, 0);
-                document.body.style.overflow = 'hidden';
-                
-                // Ensure clean transition
-                document.getElementById('login-screen').style.display = 'none';
-                
-                // Show main screen with slight delay to ensure proper transition
-                setTimeout(() => {
-                    this.showMainScreen();
-                    this.hideLoading();
-                }, 100);
-                
             } else {
                 this.hideLoading();
                 this.showError('Invalid passphrase. Please try again.');
@@ -774,57 +761,23 @@ class SecureNotesApp {
      * Show login screen
      */
     showLoginScreen() {
-        // Reset scroll position
-        window.scrollTo(0, 0);
-        
-        // Remove existing screens
         document.getElementById('setup-screen').classList.remove('active');
+        document.getElementById('login-screen').classList.add('active');
         document.getElementById('main-screen').classList.remove('active');
-        
-        // Show login screen
-        const loginScreen = document.getElementById('login-screen');
-        loginScreen.classList.add('active');
-        
-        // Reset any existing form data
-        document.getElementById('passphrase').value = '';
-        
-        // Focus on the passphrase input
-        setTimeout(() => {
-            document.getElementById('passphrase').focus();
-        }, 100);
-        
-        // Force a reflow to ensure proper rendering
-        loginScreen.style.display = 'none';
-        loginScreen.offsetHeight; // Force reflow
-        loginScreen.style.display = 'flex';
+        document.getElementById('passphrase').focus();
     }
 
     /**
      * Show main application screen
      */
     showMainScreen() {
-        // First remove existing screens
         document.getElementById('setup-screen').classList.remove('active');
         document.getElementById('login-screen').classList.remove('active');
-        
-        // Reset any scroll position
-        window.scrollTo(0, 0);
-        
-        // Show main screen
-        const mainScreen = document.getElementById('main-screen');
-        mainScreen.classList.add('active');
-        
-        // Clear any login form data
-        document.getElementById('passphrase').value = '';
+        document.getElementById('main-screen').classList.add('active');
         
         if (this.notes.length === 0) {
             this.showWelcomeScreen();
         }
-        
-        // Force a reflow to ensure proper rendering
-        mainScreen.style.display = 'none';
-        mainScreen.offsetHeight; // Force reflow
-        mainScreen.style.display = 'flex';
     }
 
     /**
