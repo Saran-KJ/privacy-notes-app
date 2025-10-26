@@ -374,8 +374,13 @@ class SecureNotesApp {
         this.showNoteEditor();
         this.populateEditor(newNote);
         
-        // Focus on title input
-        document.getElementById('note-title').focus();
+        // Focus on content textarea for quicker data entry
+        const contentEl = document.getElementById('note-content');
+        if (contentEl) {
+            setTimeout(() => { try { contentEl.focus(); } catch (e) {} }, 120);
+        } else {
+            document.getElementById('note-title').focus();
+        }
     }
 
     /**

@@ -1192,15 +1192,19 @@ body {
 
 .editor-body textarea {
     width: 100%;
-    height: 100%;
-    border: none;
-    resize: none;
+    /* Use auto height with a reasonable min so content area is visible on all devices */
+    height: auto;
+    min-height: 40vh;
+    border: 1px solid var(--border-color);
+    resize: vertical;
     font-size: 1.1rem;
     line-height: 1.7;
-    background: transparent;
+    background: #ffffff;
     color: #1e293b;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     font-weight: 400;
+    padding: 1rem;
+    border-radius: 12px;
 }
 
 .editor-body textarea:focus {
