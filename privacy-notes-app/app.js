@@ -96,6 +96,15 @@ class SecureNotesApp {
             this.showSetupScreen();
         });
 
+        // Link for users who already have a passphrase (from the setup screen)
+        const showLoginEl = document.getElementById('show-login');
+        if (showLoginEl) {
+            showLoginEl.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.showLoginScreen();
+            });
+        }
+
         // Password toggle buttons
         document.querySelectorAll('.password-toggle').forEach(button => {
             button.addEventListener('click', (e) => {
