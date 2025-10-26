@@ -1553,6 +1553,24 @@ body {
     }
 }
 
+/* Mobile minimal dashboard: hide sidebar and dashboard elements by default so only the welcome screen with the Create button shows.
+   The sidebar can still be opened via the toggle (adds body.sidebar-open). */
+@media (max-width: 768px) {
+    /* Hide sidebar content unless explicitly opened */
+    .sidebar { display: none !important; }
+    body.sidebar-open .sidebar { display: block !important; }
+
+    /* Hide header controls and search to simplify mobile dashboard */
+    .app-header .header-center, .app-header .header-right { display: none !important; }
+
+    /* Hide other main screens so welcome create button is front-and-center */
+    #search-results, #note-editor { display: none !important; }
+
+    /* Ensure welcome screen is visible and full width */
+    #welcome-screen { display: flex !important; }
+    .welcome-content { width: 100%; margin: 0.5rem; }
+}
+
 /* Mobile-only sidebar overlay behavior */
 @media (max-width: 768px) {
     .mobile-only { display: inline-flex; }
