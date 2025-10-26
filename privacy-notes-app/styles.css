@@ -1295,6 +1295,12 @@ body {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+    .search-container input {
+        width: 300px;
+    }
+}
+
 @media (max-width: 768px) {
     .app-body {
         flex-direction: column;
@@ -1306,14 +1312,19 @@ body {
         max-height: 40vh;
     }
     
+    .search-container {
+        width: 100%;
+    }
+    
     .search-container input {
         width: 100%;
-        max-width: 300px;
+        max-width: none;
     }
     
     .login-container {
         padding: 2rem;
-        max-width: 95%;
+        width: 90%;
+        max-width: 400px;
     }
     
     .logo i {
@@ -1328,6 +1339,27 @@ body {
         font-size: 1rem;
         padding: 1rem 1rem 1rem 3rem;
     }
+    
+    .editor-area {
+        height: 60vh;
+    }
+    
+    .notes-list {
+        max-height: 30vh;
+        overflow-y: auto;
+    }
+    
+    .editor-body {
+        margin: 0.5rem;
+    }
+    
+    .utilities-actions {
+        flex-wrap: wrap;
+    }
+    
+    .search-results-list {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1337,17 +1369,19 @@ body {
         gap: 1rem;
     }
     
-    .search-container input {
+    .header-right {
         width: 100%;
+        justify-content: space-between;
     }
     
     .filter-tabs {
-        flex-direction: column;
+        flex-wrap: wrap;
         gap: 0.5rem;
     }
     
     .filter-tab {
-        width: 100%;
+        flex: 1;
+        min-width: 120px;
         justify-content: center;
     }
     
@@ -1359,14 +1393,56 @@ body {
     
     .note-item {
         padding: 0.75rem 1rem;
+        margin: 0.5rem;
     }
     
     .editor-header,
     .editor-footer {
         padding: 0.75rem 1rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .editor-actions {
+        width: 100%;
+        justify-content: flex-end;
     }
     
     .editor-body {
-        padding: 1rem;
+        padding: 0.75rem;
+        margin: 0.5rem;
+    }
+    
+    .title-input {
+        width: 100%;
+        font-size: 1.2rem;
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
+    
+    .tags-input-container {
+        width: 100%;
+        margin-right: 0;
+    }
+    
+    .welcome-content {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+    
+    .welcome-content h3 {
+        font-size: 1.5rem;
+    }
+    
+    .welcome-content p {
+        font-size: 1rem;
+    }
+    
+    .utilities-section {
+        padding: 0.75rem 1rem;
+    }
+    
+    .tags-list {
+        gap: 0.5rem;
     }
 }

@@ -101,20 +101,25 @@ class CryptoManager {
      */
     async createUserVault(passphrase, userId) {
         try {
-            // Only create new salt if vault does not exist
+            // Always create a new salt for the vault
             const vaultKey = `user_vault_${userId}`;
             const saltKey = `app_salt_${userId}`;
-            let isNewVault = !localStorage.getItem(vaultKey);
-            if (isNewVault) {
-                const saltArray = crypto.getRandomValues(new Uint8Array(16));
-                const salt = Array.from(saltArray).map(b => b.toString(16).padStart(2, '0')).join('');
-                localStorage.setItem(saltKey, salt);
-            }
+            const testKey = `key_test_${userId}`;
+            
+            // Clear any existing vault data
+            localStorage.removeItem(vaultKey);
+            localStorage.removeItem(saltKey);
+            localStorage.removeItem(testKey);
+            
+            // Generate new salt
+            const saltArray = crypto.getRandomValues(new Uint8Array(16));
+            const salt = Array.from(saltArray).map(b => b.toString(16).padStart(2, '0')).join('');
+            localStorage.setItem(saltKey, salt);
 
             // Initialize with new passphrase
             const success = await this.initialize(passphrase, userId);
 
-            if (success && isNewVault) {
+            if (success) {
                 // Mark user as having a vault
                 localStorage.setItem(vaultKey, 'true');
                 localStorage.setItem('current_user', userId);

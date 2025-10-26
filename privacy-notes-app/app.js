@@ -148,13 +148,6 @@ class SecureNotesApp {
         const passphrase = document.getElementById('setup-passphrase').value;
         const confirmPassphrase = document.getElementById('confirm-passphrase').value;
 
-        // Check if vault already exists for this user
-        const vaultKey = `user_vault_${this.currentUser}`;
-        if (localStorage.getItem(vaultKey)) {
-            this.showError('A vault already exists for this user. Please log in or use a different browser/profile.');
-            return;
-        }
-
         if (!passphrase.trim()) {
             this.showError('Please enter a passphrase');
             return;
@@ -514,7 +507,9 @@ class SecureNotesApp {
         const notesList = document.getElementById('notes-list');
         const notesCount = document.getElementById('notes-count');
         
-        notesCount.textContent = this.filteredNotes.length;
+        if (notesCount) {
+            notesCount.textContent = this.filteredNotes.length;
+        }
 
         // Handle search results display
         if (this.searchQuery && this.searchQuery.length > 0) {
@@ -523,11 +518,17 @@ class SecureNotesApp {
         }
 
         // Hide search results when not searching
-        document.getElementById('search-results').classList.add('hidden');
+        const searchResults = document.getElementById('search-results');
+        if (searchResults) {
+            searchResults.classList.add('hidden');
+        }
+
+        if (!notesList) return;
 
         if (this.filteredNotes.length === 0) {
             notesList.innerHTML = '<div class="no-notes">No notes found</div>';
-            if (this.notes.length === 0) {
+            // Only show welcome screen during initial load, not during updates
+            if (this.notes.length === 0 && !document.getElementById('welcome-screen').classList.contains('hidden')) {
                 this.showWelcomeScreen();
             }
             return;
@@ -767,7 +768,11 @@ class SecureNotesApp {
         document.getElementById('welcome-screen').classList.remove('hidden');
         document.getElementById('note-editor').classList.add('hidden');
         this.currentNote = null;
-        this.updateNotesUI(); // Remove active states
+        // Update note list without triggering welcome screen again
+        const notesList = document.getElementById('notes-list');
+        if (notesList) {
+            notesList.innerHTML = '<div class="no-notes">No notes found</div>';
+        }
     }
 
     /**
