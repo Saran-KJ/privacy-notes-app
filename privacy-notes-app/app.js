@@ -33,7 +33,7 @@ class SecureNotesApp {
             // Check if this is a new user or returning user
             this.checkUserStatus();
             
-            console.log('SecureNotes app initialized');
+            // App initialized
         } catch (error) {
             console.error('Failed to initialize app:', error);
             this.showError('Failed to initialize application');
@@ -208,25 +208,16 @@ class SecureNotesApp {
             try {
                 const btn = e.target.closest && e.target.closest('button');
                 if (btn) {
-                    // Debug log for tap events
-                    console.log('[delegated event] button:', btn.id || btn.className, 'event:', e.type);
-
-                    // Add an explicit pre-call log and wrap calls to catch errors
+                    // Handle delegated button events without debug logs
                     if (btn.id === 'new-note-btn') {
                         try {
-                            console.log('[delegated -> call] createNewNote about to be called (event:', e.type, ')');
                             e.preventDefault && e.preventDefault();
                             // Use setTimeout to avoid any re-entrancy issues with pointer events
                             setTimeout(() => {
-                                try {
-                                    this.createNewNote();
-                                    console.log('[delegated -> called] createNewNote executed');
-                                } catch (errInner) {
-                                    console.error('[delegated -> error] createNewNote threw', errInner);
-                                }
+                                try { this.createNewNote(); } catch (errInner) { console.error('createNewNote threw', errInner); }
                             }, 0);
                         } catch (err) {
-                            console.error('[delegated -> error preparing createNewNote call]', err);
+                            console.error('Error preparing createNewNote call', err);
                         }
                         return;
                     }
@@ -245,8 +236,7 @@ class SecureNotesApp {
                 if (noteEl) {
                     const noteId = noteEl.dataset && noteEl.dataset.noteId;
                     if (noteId) {
-                        e.preventDefault();
-                        console.log('[delegated event] open note', noteId);
+                        e.preventDefault && e.preventDefault();
                         this.openNote(noteId);
                         return;
                     }
@@ -269,8 +259,7 @@ class SecureNotesApp {
                 try {
                     if (e && e.preventDefault) e.preventDefault();
                 } catch (err) {}
-                console.log('[direct handler] create note via', e.type || 'unknown');
-                try { this.createNewNote(); } catch (err) { console.error('Failed to create note from direct handler', err); }
+                    try { this.createNewNote(); } catch (err) { console.error('Failed to create note from direct handler', err); }
             };
 
             if (newBtn) {
@@ -443,7 +432,6 @@ class SecureNotesApp {
      * Create a new note
      */
     createNewNote() {
-        console.log('Action: createNewNote called');
         const newNote = {
             id: this.storage.generateId(),
             title: '',
@@ -472,13 +460,11 @@ class SecureNotesApp {
         this.showNoteEditor();
         this.populateEditor(newNote);
 
-        // Force-visible and give a quick visual flash to help debugging when elements overlap
+        // Ensure editor is visible and scrolled into view on small screens
         try {
             const editorEl = document.getElementById('note-editor');
             if (editorEl) {
                 editorEl.classList.remove('hidden');
-                editorEl.classList.add('flash-open');
-                setTimeout(() => { try { editorEl.classList.remove('flash-open'); } catch (e) {} }, 600);
                 // ensure it's scrolled into view on small screens
                 setTimeout(() => { try { editorEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {} }, 120);
             }
@@ -617,7 +603,7 @@ class SecureNotesApp {
      */
     handleSearch(query) {
         this.searchQuery = query.trim();
-        console.log('Search query:', this.searchQuery); // Debug log
+        // search query updated
         this.applyCurrentFilter();
         this.updateNotesUI();
     }
@@ -1061,7 +1047,7 @@ class SecureNotesApp {
      * Show success message
      */
     showSuccess(message) {
-        console.log('Success: ' + message);
+        // show success toast
         
         // Create a success toast notification
         const toast = document.createElement('div');
