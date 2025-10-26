@@ -96,6 +96,25 @@ class SecureNotesApp {
             this.showSetupScreen();
         });
 
+        // Password toggle buttons
+        document.querySelectorAll('.password-toggle').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const targetId = e.currentTarget.dataset.target;
+                const input = document.getElementById(targetId);
+                const icon = e.currentTarget.querySelector('i');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.className = 'fas fa-eye-slash';
+                    e.currentTarget.classList.add('showing');
+                } else {
+                    input.type = 'password';
+                    icon.className = 'fas fa-eye';
+                    e.currentTarget.classList.remove('showing');
+                }
+            });
+        });
+
         // Login screen
         document.getElementById('unlock-btn').addEventListener('click', () => this.handleLogin());
         document.getElementById('passphrase').addEventListener('keypress', (e) => {

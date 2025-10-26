@@ -275,6 +275,29 @@ body {
     transform: scale(1.1);
 }
 
+.password-toggle {
+    position: absolute;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.password-toggle:hover {
+    color: #667eea;
+    transform: scale(1.1);
+}
+
+.password-toggle.showing i::before {
+    content: "\f070"; /* fa-eye-slash */
+}
+
 .input-group input {
     width: 100%;
     padding: 1.25rem 1.5rem 1.25rem 3.5rem;
