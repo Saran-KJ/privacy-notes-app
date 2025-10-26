@@ -1584,6 +1584,8 @@ body {
         bottom: 0;
         background: rgba(0,0,0,0.45);
         z-index: 1500;
+        /* By default don't intercept pointer events unless visible to avoid blocking underlying buttons */
+        pointer-events: none;
     }
 
     /* Sidebar when open in overlay mode */
@@ -1606,6 +1608,7 @@ body {
     /* Show overlay when sidebar-open */
     body.sidebar-open .mobile-sidebar-overlay {
         display: block;
+        pointer-events: auto;
     }
 
     @keyframes slideInSidebar {
