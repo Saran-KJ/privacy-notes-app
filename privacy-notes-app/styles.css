@@ -1146,6 +1146,13 @@ body {
     display: none;
 }
 
+/* Temporary visual flash when editor is programmatically opened (debug helper) */
+.note-editor.flash-open {
+    box-shadow: 0 8px 24px rgba(2,6,23,0.3), 0 0 0 4px rgba(59,130,246,0.18) !important;
+    transition: box-shadow 220ms ease-in-out, transform 220ms ease-in-out;
+    transform: translateY(-2px);
+}
+
 .editor-header {
     display: flex;
     align-items: center;

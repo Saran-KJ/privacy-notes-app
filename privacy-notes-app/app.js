@@ -456,8 +456,35 @@ class SecureNotesApp {
         };
 
         this.currentNote = newNote;
+        // Ensure overlays or sidebars aren't blocking the editor on mobile
+        try {
+            document.body.classList.remove('sidebar-open');
+            const mobileOverlay = document.getElementById('mobile-sidebar-overlay');
+            if (mobileOverlay) {
+                mobileOverlay.classList.add('hidden');
+                mobileOverlay.setAttribute('aria-hidden', 'true');
+            }
+        } catch (e) {
+            // ignore
+        }
+
+        // Show the editor and populate fields
         this.showNoteEditor();
         this.populateEditor(newNote);
+
+        // Force-visible and give a quick visual flash to help debugging when elements overlap
+        try {
+            const editorEl = document.getElementById('note-editor');
+            if (editorEl) {
+                editorEl.classList.remove('hidden');
+                editorEl.classList.add('flash-open');
+                setTimeout(() => { try { editorEl.classList.remove('flash-open'); } catch (e) {} }, 600);
+                // ensure it's scrolled into view on small screens
+                setTimeout(() => { try { editorEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) {} }, 120);
+            }
+        } catch (e) {
+            // ignore
+        }
         
         // Focus on content textarea for quicker data entry
         const contentEl = document.getElementById('note-content');
