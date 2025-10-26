@@ -1363,6 +1363,9 @@ body {
 }
 
 @media (max-width: 480px) {
+    .html{
+        scroll-behavior: smooth;
+    }
     .app-header {
         padding: 1rem;
         flex-direction: column;
