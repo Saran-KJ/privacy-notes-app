@@ -704,6 +704,14 @@ class SecureNotesApp {
 
         if (!notesList) return;
 
+        // On small screens, expose the sidebar/notes area when there are notes
+        try {
+            const shouldShow = this.filteredNotes.length > 0;
+            document.body.classList.toggle('has-notes', shouldShow);
+        } catch (e) {
+            // ignore
+        }
+
         if (this.filteredNotes.length === 0) {
             notesList.innerHTML = '<div class="no-notes">No notes found</div>';
             // Only show welcome screen during initial load, not during updates
