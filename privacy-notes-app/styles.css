@@ -1445,6 +1445,43 @@ body {
     .search-results-list {
         grid-template-columns: 1fr;
     }
+
+    /* Mobile: make filter tabs scrollable and reduce their padding for better fit */
+    .filter-section {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .filter-tabs {
+        gap: 0.5rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .filter-tab {
+        min-width: 88px;
+        padding: 0.55rem 0.75rem;
+        font-size: 0.95rem;
+    }
+
+    /* Make primary actions full-width and easier to tap */
+    .primary-btn {
+        width: 100%;
+        min-height: 56px;
+        padding: 0.9rem 1rem;
+    }
+
+    /* Slightly larger icon buttons for touch */
+    .icon-btn {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    /* Sidebar becomes an inline block area with limited height on mobile */
+    .sidebar {
+        width: 100%;
+        max-height: 36vh;
+        overflow-y: auto;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1532,5 +1569,31 @@ body {
     
     .tags-list {
         gap: 0.5rem;
+    }
+
+    /* Extra small screens: tighten filter tab size and ensure horizontal scrolling */
+    .filter-tabs {
+        gap: 0.5rem;
+        padding: 0.25rem 0.5rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .filter-tab {
+        min-width: 76px;
+        padding: 0.45rem 0.65rem;
+        font-size: 0.9rem;
+    }
+
+    /* Ensure search input uses available width on very small screens */
+    .search-container input {
+        width: 100%;
+        max-width: none;
+    }
+
+    /* Reduce editor margins to maximize writing area */
+    .editor-body {
+        margin: 0.5rem;
+        padding: 0.75rem;
     }
 }
