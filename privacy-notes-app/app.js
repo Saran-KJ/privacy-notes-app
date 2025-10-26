@@ -202,14 +202,14 @@ class SecureNotesApp {
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => this.handleKeyboardShortcuts(e));
 
-        // Delegated click handler (fallback) to ensure buttons/note items work on mobile
-        // Logs clicks and routes actions if direct listeners are blocked by overlays or timing
-        document.addEventListener('click', (e) => {
+        // Delegated click/pointer handler (fallback) to ensure buttons/note items work on mobile
+        // Use pointerup to catch touch/stylus/mouse and include debug logs.
+        const delegatedHandler = (e) => {
             try {
                 const btn = e.target.closest && e.target.closest('button');
                 if (btn) {
                     // Debug log for tap events
-                    console.log('[delegated click] button:', btn.id || btn.className);
+                    console.log('[delegated event] button:', btn.id || btn.className, 'event:', e.type);
                     if (btn.id === 'new-note-btn') {
                         e.preventDefault();
                         this.createNewNote();
@@ -233,7 +233,7 @@ class SecureNotesApp {
                     const noteId = noteEl.dataset && noteEl.dataset.noteId;
                     if (noteId) {
                         e.preventDefault();
-                        console.log('[delegated click] open note', noteId);
+                        console.log('[delegated event] open note', noteId);
                         this.openNote(noteId);
                         return;
                     }
@@ -242,7 +242,11 @@ class SecureNotesApp {
                 // swallow any delegation errors to avoid breaking normal behavior
                 console.error('Delegation handler error', err);
             }
-        });
+        };
+
+        document.addEventListener('click', delegatedHandler);
+        // Pointer events are more reliable for touch devices — handle pointerup as well
+        document.addEventListener('pointerup', delegatedHandler);
     }
 
     /**
