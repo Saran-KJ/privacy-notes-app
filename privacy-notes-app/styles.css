@@ -1486,8 +1486,17 @@ body {
     /* Sidebar becomes an inline block area with limited height on mobile */
     .sidebar {
         width: 100%;
-        max-height: 36vh;
+        /* Reduce sidebar height on mobile so main content (notes/editor) remains visible
+           while allowing the sidebar to scroll independently. */
+        max-height: 28vh;
         overflow-y: auto;
+    }
+
+    /* Ensure notes list in sidebar stays visible and scrollable without pushing main content */
+    .notes-list {
+        max-height: 18vh;
+        overflow-y: auto;
+        padding-bottom: 0.5rem;
     }
 }
 
