@@ -201,6 +201,48 @@ class SecureNotesApp {
 
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => this.handleKeyboardShortcuts(e));
+
+        // Delegated click handler (fallback) to ensure buttons/note items work on mobile
+        // Logs clicks and routes actions if direct listeners are blocked by overlays or timing
+        document.addEventListener('click', (e) => {
+            try {
+                const btn = e.target.closest && e.target.closest('button');
+                if (btn) {
+                    // Debug log for tap events
+                    console.log('[delegated click] button:', btn.id || btn.className);
+                    if (btn.id === 'new-note-btn') {
+                        e.preventDefault();
+                        this.createNewNote();
+                        return;
+                    }
+                    if (btn.id === 'save-note') {
+                        e.preventDefault();
+                        this.saveCurrentNote();
+                        return;
+                    }
+                    if (btn.id === 'close-editor') {
+                        e.preventDefault();
+                        this.showWelcomeScreen();
+                        return;
+                    }
+                }
+
+                // Note items are generated dynamically; handle clicks on them via delegation
+                const noteEl = e.target.closest && e.target.closest('.note-item');
+                if (noteEl) {
+                    const noteId = noteEl.dataset && noteEl.dataset.noteId;
+                    if (noteId) {
+                        e.preventDefault();
+                        console.log('[delegated click] open note', noteId);
+                        this.openNote(noteId);
+                        return;
+                    }
+                }
+            } catch (err) {
+                // swallow any delegation errors to avoid breaking normal behavior
+                console.error('Delegation handler error', err);
+            }
+        });
     }
 
     /**
