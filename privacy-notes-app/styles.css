@@ -93,11 +93,18 @@ body {
 .screen {
     display: none;
     height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
 }
 
 .screen.active {
     display: flex;
     flex-direction: column;
+    z-index: 2;
 }
 
 /* Login Screen */

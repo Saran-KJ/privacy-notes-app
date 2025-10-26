@@ -761,23 +761,57 @@ class SecureNotesApp {
      * Show login screen
      */
     showLoginScreen() {
+        // Reset scroll position
+        window.scrollTo(0, 0);
+        
+        // Remove existing screens
         document.getElementById('setup-screen').classList.remove('active');
-        document.getElementById('login-screen').classList.add('active');
         document.getElementById('main-screen').classList.remove('active');
-        document.getElementById('passphrase').focus();
+        
+        // Show login screen
+        const loginScreen = document.getElementById('login-screen');
+        loginScreen.classList.add('active');
+        
+        // Reset any existing form data
+        document.getElementById('passphrase').value = '';
+        
+        // Focus on the passphrase input
+        setTimeout(() => {
+            document.getElementById('passphrase').focus();
+        }, 100);
+        
+        // Force a reflow to ensure proper rendering
+        loginScreen.style.display = 'none';
+        loginScreen.offsetHeight; // Force reflow
+        loginScreen.style.display = 'flex';
     }
 
     /**
      * Show main application screen
      */
     showMainScreen() {
+        // First remove existing screens
         document.getElementById('setup-screen').classList.remove('active');
         document.getElementById('login-screen').classList.remove('active');
-        document.getElementById('main-screen').classList.add('active');
+        
+        // Reset any scroll position
+        window.scrollTo(0, 0);
+        
+        // Show main screen
+        const mainScreen = document.getElementById('main-screen');
+        mainScreen.classList.add('active');
+        
+        // Clear any login form data
+        document.getElementById('passphrase').value = '';
         
         if (this.notes.length === 0) {
             this.showWelcomeScreen();
         }
+        
+        // Force a reflow to ensure proper rendering
+        mainScreen.style.display = 'none';
+        mainScreen.offsetHeight; // Force reflow
+        mainScreen.style.display = 'flex';
     }
 
     /**
