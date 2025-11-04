@@ -38,7 +38,7 @@ class StorageManager {
 
             request.onsuccess = () => {
                 this.db = request.result;
-                console.log('Database initialized successfully');
+                // Database opened successfully
                 resolve(true);
             };
 
